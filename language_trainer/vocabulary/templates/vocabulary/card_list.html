@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Cards{% endblock %}
+
+{% block content %}
+<h1>Cards</h1>
+    <ul>
+        {% for entry in entries %}
+            <li>{{ entry.foreign_word }} - {{ entry.translation }}</li>
+        {% empty %}
+            <li>No cards</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

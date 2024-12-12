@@ -4,11 +4,12 @@ from django.views.generic import TemplateView, ListView, FormView, DeleteView, U
 from django.views.generic.edit import CreateView
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from .models import Card, Tag
-#from .forms import CardForm
+from .forms import CardForm
 
 # Create your views here.
 
@@ -27,15 +28,16 @@ class UserRegistration(CreateView):
     success_url = reverse_lazy('login')
 
 
-class CardListView(ListView):
+class CreateCard(CreateView):
+    model = Card
+    template_name = 'vocabulary/add_card.html'
+    form_class = CardForm
+    success_url = reverse_lazy('add_card')
+
+class CardListView(LoginRequiredMixin, ListView):
     model = Card
     template_name = 'vocabulary/card_list.html'
     context_object_name = 'cards'
-
-    #def get_context_data(self, **kwargs: reverse_lazy) -> dict[str, Any]:
-     #   context = super().get_context_data(**kwargs)
-      #  context['form'] = CardForm
-       # return context
 
 def logoutuser(request):
     logout(request)

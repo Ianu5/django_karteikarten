@@ -5,8 +5,8 @@
 {% block content %}
 <h1>Cards</h1>
     <ul>
-        {% for entry in entries %}
-            <li>{{ entry.foreign_word }} - {{ entry.translation }}</li>
+        {% for card in cards %}
+            <li>{{ card.foreign_word }} - {{ card.translation }}</li>
         {% empty %}
             <li>No cards</li>
         {% endfor %}

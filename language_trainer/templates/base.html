@@ -13,6 +13,7 @@
                     <li><a href="{% url 'home' %}">Home</a></li>
                     {% if user.is_authenticated %}
                         <li><a href="{% url 'card_list' %}">Cards</a></li>
+                        <li><a href="{% url 'add_card' %}">Add a Card</a></li>
                         <li><a href="{% url 'logout' %}">logout</a></li>
                     {% else %}
                         <li><a href="{% url 'login' %}">Login</a></li>

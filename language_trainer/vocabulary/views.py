@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from django.views.generic import TemplateView, ListView, FormView, DeleteView, UpdateView
 from django.views.generic.edit import CreateView
@@ -7,7 +7,6 @@ from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
-from django.shortcuts import redirect
 from .models import Card, Tag
 from .forms import CardForm
 
@@ -42,3 +41,15 @@ class CardListView(LoginRequiredMixin, ListView):
 def logoutuser(request):
     logout(request)
     return redirect('/')
+
+def delete_card(request, pk):
+    card = get_object_or_404(Card, pk=pk)
+    if request.method == 'POST':
+        card.delete()
+        return redirect('card_list')
+    
+class CardUpdate(UpdateView):
+    model = Card
+    template_name = 'vocabulary/card_edit.html'
+    form_class = CardForm
+    success_url = reverse_lazy('card_list')

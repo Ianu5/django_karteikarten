@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>These are your available tags</h2>
+<table>
+    <thead>
+        <th>Name</th>
+        <th>Delete</th>
+    </thead>
+    <tbody>
+    {% for tag in tags %}
+        <tr>
+            <td>{{ tag.name }}</td>
+            <td>
+                <form action="{% url 'delete_tag' tag.id %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" onclick="return confirm('Confirm Deletion')">Delete</button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<a href="{% url 'add_tag' %}">New Tag</a>
+{% endblock %}
+

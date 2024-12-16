@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Tag(models.Model):
     name = models.CharField(max_length=50, unique=True)
-    users_using_tag = models.ManyToManyField(User)
 
     def __str__(self):
         return self.name

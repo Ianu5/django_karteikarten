@@ -1,12 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Create a new Card</h2>
 <form method="post">
+    <h2>Add a new tag</h2>
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Add</button>
 </form>
-<a href="{% url 'add_tag' %}">New Tag</a>
-
 {% endblock %}

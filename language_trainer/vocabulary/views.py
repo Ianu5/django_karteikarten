@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from .models import Card, Tag
-from .forms import CardForm
+from .forms import CardForm, TagForm
 
 # Create your views here.
 
@@ -27,20 +27,30 @@ class UserRegistration(CreateView):
     success_url = reverse_lazy('login')
 
 
+def logoutuser(request):
+    logout(request)
+    return redirect('/')
+
+
 class CreateCard(CreateView):
     model = Card
     template_name = 'vocabulary/add_card.html'
     form_class = CardForm
     success_url = reverse_lazy('add_card')
 
+
+class CardUpdate(UpdateView):
+    model = Card
+    template_name = 'vocabulary/card_edit.html'
+    form_class = CardForm
+    success_url = reverse_lazy('card_list')
+
+
 class CardListView(LoginRequiredMixin, ListView):
     model = Card
     template_name = 'vocabulary/card_list.html'
     context_object_name = 'cards'
 
-def logoutuser(request):
-    logout(request)
-    return redirect('/')
 
 def delete_card(request, pk):
     card = get_object_or_404(Card, pk=pk)
@@ -48,8 +58,22 @@ def delete_card(request, pk):
         card.delete()
         return redirect('card_list')
     
-class CardUpdate(UpdateView):
-    model = Card
-    template_name = 'vocabulary/card_edit.html'
-    form_class = CardForm
-    success_url = reverse_lazy('card_list')
+
+class CreateTag(CreateView):
+    model = Tag
+    template_name = 'vocabulary/add_tag.html'
+    form_class = TagForm
+    success_url = reverse_lazy('add_card')
+
+
+class TagListView(ListView):
+    model = Tag
+    template_name = 'vocabulary/tag_list.html'
+    context_object_name = 'tags'
+
+
+def delete_tag(request, pk):
+    tag = get_object_or_404(Tag, pk=pk)
+    if request.method == 'POST':
+        tag.delete()
+        return redirect('tag_list')

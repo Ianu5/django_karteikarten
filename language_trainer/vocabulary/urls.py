@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import UserLogin, UserRegistration, HomeView, CardListView, logoutuser, CreateCard, delete_card, CardUpdate, CreateTag
+from .views import UserLogin, UserRegistration, HomeView, CardListView, logoutuser, CreateCard, delete_card, CardUpdate, CreateTag, CardFilteredListView
 from .views import TagListView, delete_tag
 from django.contrib.auth.views import LogoutView
 
@@ -15,4 +15,5 @@ urlpatterns = [
     path('tag/add', CreateTag.as_view(), name='add_tag'),
     path('tag/<int:pk>/delete', delete_tag, name='delete_tag'),
     path('tag/list', TagListView.as_view(), name='tag_list'),
+    path('card/filtered/', CardFilteredListView.as_view(), name="filtered_cards"),
 ]
